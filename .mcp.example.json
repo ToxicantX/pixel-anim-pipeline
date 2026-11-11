@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "pixel-animator-pro": {
+      "command": "python",
+      "args": [
+        "mcp_server/server.py"
+      ],
+      "env": {
+        "ASEPRITE_PATH": "C:/path/to/aseprite.exe"
+      }
+    }
+  }
+}
