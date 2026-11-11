@@ -1,0 +1,78 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Scripts/PaperdollDemo.cs" id="1_demo"]
+[ext_resource type="PackedScene" path="res://Scenes/CharacterPaperdoll.tscn" id="2_doll"]
+
+[node name="Demo" type="Node2D"]
+script = ExtResource("1_demo")
+
+[node name="CharacterRoot" parent="." instance=ExtResource("2_doll")]
+position = Vector2(560, 440)
+scale = Vector2(8, 8)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Margin" type="MarginContainer" parent="CanvasLayer"]
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 224.0
+offset_bottom = 360.0
+
+[node name="Toolbar" type="VBoxContainer" parent="CanvasLayer/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="AnimationHeader" type="Label" parent="CanvasLayer/Margin/Toolbar"]
+layout_mode = 2
+text = "Animation"
+
+[node name="AnimGrid" type="GridContainer" parent="CanvasLayer/Margin/Toolbar"]
+layout_mode = 2
+columns = 2
+
+[node name="IdleButton" type="Button" parent="CanvasLayer/Margin/Toolbar/AnimGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Idle"
+
+[node name="WalkButton" type="Button" parent="CanvasLayer/Margin/Toolbar/AnimGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Walk"
+
+[node name="AttackButton" type="Button" parent="CanvasLayer/Margin/Toolbar/AnimGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Attack"
+
+[node name="HitButton" type="Button" parent="CanvasLayer/Margin/Toolbar/AnimGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Hit"
+
+[node name="HSeparator1" type="HSeparator" parent="CanvasLayer/Margin/Toolbar"]
+layout_mode = 2
+
+[node name="WeaponHeader" type="Label" parent="CanvasLayer/Margin/Toolbar"]
+layout_mode = 2
+text = "Weapon"
+
+[node name="WeaponSelect" type="OptionButton" parent="CanvasLayer/Margin/Toolbar"]
+layout_mode = 2
+item_count = 2
+selected = 0
+popup/item_0/text = "Sword"
+popup/item_0/id = 0
+popup/item_1/text = "Axe"
+popup/item_1/id = 1
+
+[node name="ModeToggle" type="CheckButton" parent="CanvasLayer/Margin/Toolbar"]
+layout_mode = 2
+text = "Socket Mode"
+
+[node name="HSeparator2" type="HSeparator" parent="CanvasLayer/Margin/Toolbar"]
+layout_mode = 2
+
+[node name="FacingToggle" type="CheckBox" parent="CanvasLayer/Margin/Toolbar"]
+layout_mode = 2
+text = "Facing Left"

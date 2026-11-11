@@ -1,0 +1,24 @@
+config_version=5
+
+[application]
+
+config/name="PixelPipeline"
+run/main_scene="res://Scenes/Demo.tscn"
+config/features=PackedStringArray("4.7", "C#", "GL Compatibility")
+
+[display]
+
+window/size/viewport_width=960
+window/size/viewport_height=640
+window/stretch/mode="canvas_items"
+window/stretch/aspect="keep"
+
+[dotnet]
+
+project/assembly_name="PixelPipeline"
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+environment/defaults/default_clear_color=Color(0.12, 0.12, 0.14, 1)
+textures/canvas_textures/default_texture_filter=0

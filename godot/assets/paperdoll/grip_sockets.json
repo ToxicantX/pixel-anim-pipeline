@@ -1,0 +1,98 @@
+[
+  {
+    "frame": 1,
+    "grip_x": 20,
+    "grip_y": 16,
+    "angle_deg": 15
+  },
+  {
+    "frame": 2,
+    "grip_x": 20,
+    "grip_y": 17,
+    "angle_deg": 15
+  },
+  {
+    "frame": 3,
+    "grip_x": 20,
+    "grip_y": 17,
+    "angle_deg": 15
+  },
+  {
+    "frame": 4,
+    "grip_x": 20,
+    "grip_y": 16,
+    "angle_deg": 15
+  },
+  {
+    "frame": 5,
+    "grip_x": 21,
+    "grip_y": 16,
+    "angle_deg": 15
+  },
+  {
+    "frame": 6,
+    "grip_x": 21,
+    "grip_y": 17,
+    "angle_deg": 15
+  },
+  {
+    "frame": 7,
+    "grip_x": 20,
+    "grip_y": 16,
+    "angle_deg": 15
+  },
+  {
+    "frame": 8,
+    "grip_x": 19,
+    "grip_y": 16,
+    "angle_deg": 15
+  },
+  {
+    "frame": 9,
+    "grip_x": 19,
+    "grip_y": 16,
+    "angle_deg": 15
+  },
+  {
+    "frame": 10,
+    "grip_x": 20,
+    "grip_y": 17,
+    "angle_deg": 15
+  },
+  {
+    "frame": 11,
+    "grip_x": 17,
+    "grip_y": 15,
+    "angle_deg": -45
+  },
+  {
+    "frame": 12,
+    "grip_x": 25,
+    "grip_y": 16,
+    "angle_deg": 90
+  },
+  {
+    "frame": 13,
+    "grip_x": 23,
+    "grip_y": 18,
+    "angle_deg": 135
+  },
+  {
+    "frame": 14,
+    "grip_x": 20,
+    "grip_y": 16,
+    "angle_deg": 15
+  },
+  {
+    "frame": 15,
+    "grip_x": 17,
+    "grip_y": 14,
+    "angle_deg": -25
+  },
+  {
+    "frame": 16,
+    "grip_x": 18,
+    "grip_y": 16,
+    "angle_deg": -25
+  }
+]

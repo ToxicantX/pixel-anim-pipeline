@@ -1,7 +1,7 @@
 ---
 name: pixel-animator
 version: "2.1"
-description: Turn one generated character image on a #FF00FF background into a rigged, 16-frame Aseprite animation with a sprite sheet, JSON atlas and GIF preview, and optionally equip separately generated weapons through a hidden grip socket (paperdoll), using the Pixel-Animator-Pro MCP server in this repository. Use when asked to animate a single side-view character sprite through this pipeline, or to attach weapons to such a character.
+description: Turn one generated character image on a #FF00FF background into a rigged, 16-frame Aseprite animation with a sprite sheet, JSON atlas and GIF preview, and optionally equip separately generated weapons through a hidden grip socket (paperdoll), using the Pixel-Animator-Pro MCP server in this repository, plus a Godot 4 .NET demo scene that plays the exports. Use when asked to animate a single side-view character sprite through this pipeline, or to attach weapons to such a character.
 ---
 
 # Pixel animator
@@ -221,3 +221,41 @@ It draws `input/test_hero.png` (a right-facing figure on #FF00FF), chooses the s
 It draws an unarmed right-facing hero with a forward fist and a north-up sword and axe into `input/paperdoll/`, chooses the splits and the hand pixel from the ASCII dump, and writes only into `output/paperdoll/`: `character_socket.aseprite`, the `char_` body exports, and the equipped files, sheets, GIFs and `grip_sockets.json` for weapon ids `sword` and `axe`. It asserts the eight registered tools, the seven-layer order with a hidden socket and an empty base `Weapon` layer, one socket pixel per frame in the protocol colour at the hand plus the drawn torso offset and grip offset, unchanged tags and durations, a weapon layer equal to an independent inverse-mapping reference with the pivot colour on the grip, the reported clipping counts, a +90 slash pointing right, weapon sheets that hold only the weapon, a GIF that matches the composed visible layers, unchanged source files, and distinct sword and axe overlays. `--fixture-only` writes the fixtures and stops.
 
 These checks prove structure and grounding. Judge pose, readability and appeal by eye.
+
+
+## Godot integration
+
+[godot/](../godot/project.godot) is a Godot 4.7.2 .NET project that plays the exported paperdoll assets. It targets `net10.0` through `Godot.NET.Sdk/4.7.2`, renders with GL Compatibility and nearest-neighbour texture filtering, and boots `PaperdollDemo.cs`. Installation, build, import and run commands live in the root [README](../README.md); this section records how the scene consumes the pipeline exports and what the code guarantees.
+
+### Prefab and demo scene
+
+[godot/Scenes/CharacterPaperdoll.tscn](../godot/Scenes/CharacterPaperdoll.tscn) is the reusable prefab. Its [CharacterPaperdoll.cs](../godot/Scripts/CharacterPaperdoll.cs) controller owns a body sprite, a baked weapon-sheet sprite, a weapon pivot with a child dynamic weapon sprite, and an FX sprite. The demo scene [godot/Scenes/Demo.tscn](../godot/Scenes/Demo.tscn) instances the prefab at 8x and adds a toolbar that switches animation (`idle`, `walk`, `attack`, `hit`), weapon (`sword` or `axe`), weapon mode (baked overlay sheet or socket-attached dynamic weapon) and facing direction.
+
+Assets under [godot/assets/paperdoll/](../godot/assets/paperdoll/) are copied from the pipeline outputs by [scripts/prepare_godot_demo.py](../scripts/prepare_godot_demo.py); the README holds the command. The controller reads every JSON file through `Godot.FileAccess`, so a game export must add `*.json` to the export preset's non-resource file filter, or the atlas and socket data are absent from the package.
+
+### Baking SpriteFrames in the Inspector
+
+Select the prefab and press the **Bake Sprite Frames** button that [CharacterPaperdoll.cs](../godot/Scripts/CharacterPaperdoll.cs) exports. The bake builds `SpriteFrames` from the sheet PNG and atlas JSON with the real builder [AsepriteSpriteFramesBuilder.cs](../godot/Scripts/AsepriteSpriteFramesBuilder.cs), validates them in memory, saves them to the `.tres` path, and only then rebinds the live node. A failed bake, such as a missing JSON or an unwritable path, prints diagnostics without rebinding the live frames.
+
+The builder sets a 10 FPS base speed and assigns each animation frame a duration of the atlas `duration` value divided by 100. It turns the four tags into animations, gives looping modes to `idle`, `walk`, `run`, `fly` and `default`, and expands frames for the `forward`, `reverse`, `pingpong` and `pingpong_reverse` directions. It rejects trimmed or rotated frames, empty frame arrays and malformed sockets.
+
+### Single body clock and followers
+
+`BodySprite` is the only clock. The weapon sheet and FX layers are paused followers: the controller positions them with `SetFrameAndProgress` from the body frame and progress, so a paused body holds every layer and a mid-animation weapon swap leaves the body frame where it was. A follower whose `SpriteFrames` lack the current animation hides and resets its cursor, so it cannot address a frame past the end of a shorter clip.
+
+### Mirroring, grip and root transform
+
+Facing left mirrors the body, weapon sheet and FX layers through explicit `Scale` and `Position` maths. The controller leaves the root transform unchanged, so a parent, animation player or physics body can transform the doll. The grip target is the pixel centre of the socket, `(grip_x + 0.5, grip_y + 0.5)`, and the dynamic weapon is offset by the same half pixel so the hilt pixel centre lands on the grip. `GetCurrentGripGlobalPosition()` reports the actual world position of the current grip, including under a rotated and scaled parent.
+
+### Baked and dynamic weapons
+
+The prefab offers two weapon modes over the same exports:
+
+- Overlay mode plays `weapon_<id>_sheet.png` from the body clock and keeps the exported pixel silhouettes exactly.
+- Socket mode reads `weapon_<id>_metadata.json`, takes its `pivot`, and rotates the upright `sword_clean.png` or `axe_clean.png` at runtime. It can draw past the body canvas, avoiding the baked sheet's fixed-canvas clipping; viewport clipping still applies. Engine rotation can produce a different silhouette from the nearest-neighbour sheet.
+
+Socket angles are degrees clockwise from north-up, the convention the paperdoll export writes.
+
+### Acceptance checks
+
+[godot/Tests/Acceptance.tscn](../godot/Tests/Acceptance.tscn) runs [BuilderChecks.cs](../godot/Tests/BuilderChecks.cs) and [ControllerChecks.cs](../godot/Tests/ControllerChecks.cs) with a 10 s watchdog and exits non-zero on the first failed assertion. The controller checks use the real prefab and assets: one body clock, paused followers, mirrored grip under a rotated and scaled parent, untouched root transform, both weapon modes, the editor bake and save-failure handling. Save-failure tests print rejection diagnostics on purpose; the exit code reports the result. Run the checks with the README commands.

@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Scripts/CharacterPaperdoll.cs" id="1_script"]
+
+[node name="CharacterRoot" type="Node2D"]
+texture_filter = 1
+script = ExtResource("1_script")
+
+[node name="BodySprite" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+centered = false
+
+[node name="WeaponSheetSprite" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+centered = false
+
+[node name="WeaponPivot" type="Node2D" parent="."]
+
+[node name="DynamicWeaponSprite" type="Sprite2D" parent="WeaponPivot"]
+texture_filter = 1
+centered = false
+
+[node name="FXSprite" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+centered = false

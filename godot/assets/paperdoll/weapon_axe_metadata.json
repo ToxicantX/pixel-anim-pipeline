@@ -1,0 +1,96 @@
+{
+  "canvas": {
+    "width": 32,
+    "height": 32
+  },
+  "coordinates": "zero-based canvas pixels, x right, y down; frames one-based",
+  "angle": "degrees clockwise from north-up; arbitrary rotation is not lossless",
+  "pivot": {
+    "x": 11,
+    "y": 20
+  },
+  "durations_ms": [
+    180,
+    120,
+    180,
+    120,
+    100,
+    80,
+    100,
+    100,
+    80,
+    100,
+    140,
+    60,
+    80,
+    180,
+    80,
+    180
+  ],
+  "clipping": [
+    {
+      "frame": 1,
+      "clipped_pixels": 0
+    },
+    {
+      "frame": 2,
+      "clipped_pixels": 0
+    },
+    {
+      "frame": 3,
+      "clipped_pixels": 0
+    },
+    {
+      "frame": 4,
+      "clipped_pixels": 0
+    },
+    {
+      "frame": 5,
+      "clipped_pixels": 0
+    },
+    {
+      "frame": 6,
+      "clipped_pixels": 0
+    },
+    {
+      "frame": 7,
+      "clipped_pixels": 0
+    },
+    {
+      "frame": 8,
+      "clipped_pixels": 0
+    },
+    {
+      "frame": 9,
+      "clipped_pixels": 0
+    },
+    {
+      "frame": 10,
+      "clipped_pixels": 0
+    },
+    {
+      "frame": 11,
+      "clipped_pixels": 0
+    },
+    {
+      "frame": 12,
+      "clipped_pixels": 56
+    },
+    {
+      "frame": 13,
+      "clipped_pixels": 24
+    },
+    {
+      "frame": 14,
+      "clipped_pixels": 0
+    },
+    {
+      "frame": 15,
+      "clipped_pixels": 1
+    },
+    {
+      "frame": 16,
+      "clipped_pixels": 0
+    }
+  ]
+}
